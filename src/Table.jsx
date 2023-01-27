@@ -39,15 +39,15 @@ let Table = (props) => {
                 <td>{el.genre.name}</td>
                 <td>{el.numberInStock}</td>
                 <td>{el.dailyRentalRate}</td>
-                <td><span onClick= {(e)=>{
-                  if(e.currentTarget.innerText == "favorite_border"){
-                  e.currentTarget.innerText = "favorite"
-                }
-                else{
-                  e.currentTarget.innerText = "favorite_border"
-                }
-                }}
-                class="material-icons-outlined">favorite_border</span></td>
+                <td onClick = {() => {
+                  props.toggleLike(el._id)
+                }}>
+                  {el.liked ? (
+                    <span class="material-icons-outlined">favorite</span>
+                  ) : (
+                    <span class="material-icons-outlined">favorite_border</span>
+                  )}
+                  </td>
                 <td><button class = "table-delete-btn">Delete</button></td>
 
             </tr>
