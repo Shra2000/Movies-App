@@ -26,6 +26,12 @@ class App extends React.Component {
     }
     this.setState({ movies: currMoviesArr });
   };
+  deleteMovies = (id) => {
+    let filteredArr = this.state.movies.filter((el) =>{
+    return el._id!= id;
+    })
+    this.setState({movies : filteredArr});
+  };
 
   componentDidMount() {
 
@@ -56,8 +62,9 @@ class App extends React.Component {
          />
 
         <div class = "col-9 p-4">
-        <Search/>
+        <Search total = {this.state.movies.length}/>
         <Table 
+        deleteMovies = {this.deleteMovies}
         toggleLike={this.toggleLike}
         selectedFilter={this.state.selectedFilter}
         moviesData= {this.state.movies}

@@ -1,20 +1,33 @@
 import Pagination from "./Pagination";
+import React from "react";
 import "./Table.css";
 
-let Table = (props) => {
-  console.log(props);
+class Table extends React.Component{
 
-  let allMovies= props.moviesData;
-  let currFilter = props.selectedFilter;
+state = {
+  currPage : 1,
+};
+selectPage = (value) => {
+  this.setState({currPage:value})
+}
+
+render() {
+
+  let allMovies= this.props.moviesData;
+  let currFilter = this.props.selectedFilter;
 
   let filteredMoviesArr = allMovies.filter((el) => {
-    if (currFilter == "All Genre") {
+    if (currFilter === "All Genre") {
       return el;
-    } else if (el.genre.name == currFilter) {
+    } else if (el.genre.name === currFilter) {
       return el;
     }
   });
-  let arrayToBeUsedInTable = filteredMoviesArr.slice(0,4)
+
+  let numberOfPages = Math.ceil(filteredMoviesArr.length/4);
+  let startIndex = (this.state.currPage-1)*4;
+  let endIndex = Math.min(filteredMoviesArr.length, this.state.currPage*4);
+    let arrayToBeUsedInTable = filteredMoviesArr.slice(startIndex,endIndex);
     return(
         <>
         <div class="row">
@@ -40,7 +53,7 @@ let Table = (props) => {
                 <td>{el.numberInStock}</td>
                 <td>{el.dailyRentalRate}</td>
                 <td onClick = {() => {
-                  props.toggleLike(el._id)
+                  this.props.toggleLike(el._id)
                 }}>
                   {el.liked ? (
                     <span class="material-icons-outlined">favorite</span>
@@ -48,7 +61,8 @@ let Table = (props) => {
                     <span class="material-icons-outlined">favorite_border</span>
                   )}
                   </td>
-                <td><button class = "table-delete-btn">Delete</button></td>
+                <td><button onClick = {() => { this.props.deleteMovies(el._id);
+                }} className = "table-delete-btn">Delete</button></td>
 
             </tr>
             );
@@ -60,10 +74,13 @@ let Table = (props) => {
 </table>
 </div>
 </div>
-<Pagination/>
+<Pagination currPage= {this.state.currPage}
+selectPage = {this.selectPage}
+numberOfPages={numberOfPages}/>
 </>
 
 
-    );
+ );
+};
 };
 export default Table;
