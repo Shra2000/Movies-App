@@ -25,7 +25,10 @@ render() {
   });
 
   filteredMoviesArr = filteredMoviesArr .filter((el) => {
-    return el.title.includes(this.props.search);
+    let movieTitle = el.title;
+    movieTitle = movieTitle.toLowerCase();
+    let s = this.props.search.toLowerCase();
+    return movieTitle.includes(s);
   });
 
   let numberOfPages = Math.ceil(filteredMoviesArr.length/4);
