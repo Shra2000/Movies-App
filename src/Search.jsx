@@ -13,6 +13,10 @@ let Search = (props) => {
                     type="text"
                     class= "form-control mt-4"
                     placeholder="Search..."
+                    value ={props.Search}
+                    onChange ={(e)=>{
+                        props.updateSearch(e.currentTarget.value);
+                    }}
                     />
                 </div>
             </div>

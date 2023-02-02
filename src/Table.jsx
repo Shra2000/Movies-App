@@ -24,6 +24,10 @@ render() {
     }
   });
 
+  filteredMoviesArr = filteredMoviesArr .filter((el) => {
+    return el.title.includes(this.props.search);
+  });
+
   let numberOfPages = Math.ceil(filteredMoviesArr.length/4);
   let startIndex = (this.state.currPage-1)*4;
   let endIndex = Math.min(filteredMoviesArr.length, this.state.currPage*4);
